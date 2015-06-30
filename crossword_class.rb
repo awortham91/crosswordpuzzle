@@ -1,14 +1,15 @@
-@words = []
-file = File.open("wordlist copy.txt")
-file.each do |line|
-  @words.push line.chomp
-end
-@five_letter_words = []
-@words.each do |word|
-  if word.length == 5
-    @five_letter_words << word
-  end
-end
+require_relative 'word_creation.rb'
+require 'pry'
+
+binding.pry
+
+a = Word_lists.new
+a.five_letters
+a.create_arrays
+a.five_list
+
+
+
 
 def find_words
 #first five
@@ -182,7 +183,7 @@ end
   puts ""
 end
 
-100.times do
+10.times do
   @x = Time.new
   until find_words != ""
     find_words

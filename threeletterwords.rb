@@ -1,3 +1,5 @@
+require 'pry'
+
 @words = []
 file = File.open("wordlist copy.txt")
 file.each do |line|
@@ -24,12 +26,12 @@ count = 0
 while true
 find_words
 count += 1
-puts count
-if @board_reverse.all? { |word| @letters.include?(word.join(""))}
-puts @board_reverse[0].join("")
-puts @board_reverse[1].join("")
-puts @board_reverse[2].join("")
 
+if @letters.include?(@board_reverse[0].join("")) && @letters.include?(@board_reverse[1].join("")) && @letters.include?(@board_reverse[2].join(""))
+
+  puts @board_reverse[0].join("")
+  puts @board_reverse[1].join("")
+  puts @board_reverse[2].join("")
 
 break
 end
