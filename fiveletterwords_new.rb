@@ -110,43 +110,40 @@ def find_words
     return ""
   end
 
-#found four
+  @x += 1
 
-shuffled_words.each do |word|
-  word = word.split("")
-  if word[0] == @word_four[0] && word[1] == @word_four[1] && word[2] == @word_four[2]
-    @word_four[3] = word[3]
-    @word_four[4] = word[4]
-    break
-  end
-end
+  # final four!
 
-shuffled_words.each do |word|
-  word = word.split("")
-  if word[0] == @word_one[3] && word[1] == @word_two[3] && word[2] == @word_three[3] && word[2] == @word_four[3]
-    @word_five[3] = word[4]
-    break
-  end
-end
-
-#check
-  unless shuffled_words.any? {|word| word.start_with?("#{@word_five[0]}#{@word_five[1]}#{@word_five[2]}#{@word_five[3]}")}
-    return ""
-  end
-  unless shuffled_words.any? {|word| word.start_with?("#{@word_one[4]}#{@word_two[4]}#{@word_three[4]}#{@word_four[4]}")}
-    return ""
-  end
-
-#first one
-  shuffled_words.each do |word|
-    if word[0] == @word_five[0] && word[1] == @word_five[1] && word[2] == @word_five[2] && word[3] == @word_five[3] &&
-      shuffled_words.include?("#{@word_one[4]}#{@word_two[4]}#{@word_three[4]}#{@word_four[4]}#{word[4]}")
-        @word_five[4] = word[4]
-        break
+  shuffled_words.each do |word1|
+    if word1[0] == @word_four[0] && word1[1] == @word_four[1] && word1[2] == @word_four[2]
+      if shuffled_words.any? {|word| word.start_with?("#{@word_one[3]}#{@word_two[3]}#{@word_three[3]}#{@word1[3]}")}
+        if shuffled_words.any? {|word| word.start_with?("#{@word_one[4]}#{@word_two[4]}#{@word_three[4]}#{@word1[4]}")}
+          shuffled_words.each do |word2|
+            if word2[0] == word_one[3] && word2[1] == word_two[3] && word2[2] == word_three[3] && word2[3] == word_four[3]
+              if shuffled_words.any? {|words| words.start_with?("#{@word_five[0]}#{@word_five[1]}#{@word_five[2]}#{@word2[4]}")}
+                alphabet = ("a".."z").to_a
+                alphabet.each do |letter|
+                  if shuffled_words.include?("#{@word_one[4]}#{@word_two[4]}#{@word_three[4]}#{word1[4]}#{letter}")
+                    if shuffled_words.include?("#{@word_five[0]}#{@word_five[1]}#{@word_five[2]}#{@word_five[3]}#{letter}")
+                      @word_four[3] = word1[3]
+                      @word_five[3] = word2[3]
+                      @word_four[4] = word1[4]
+                      @word_five[4] = letter
+                      break
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+      end
     else
       return ""
     end
   end
+
+
 
   @board = [@word_one, @word_two, @word_three, @word_four, @word_five]
   @board_reverse = @board.transpose
@@ -167,6 +164,6 @@ end
 @x = 0
 until find_words != ""
   puts "#{@x}"
-  @x += 1
+
   find_words
 end
