@@ -11,7 +11,7 @@ end
 end
 
 def find_words
-#first five
+#round one
 
 
   shuffled_words = @five_letter_words.shuffle
@@ -22,9 +22,8 @@ def find_words
   @word_five = "aaaaa".split("")
 
 
-#first four
+
   shuffled_words.each do |word|
-    word = word.split("")
     if word[0] == @word_one[0]
       @word_two[0] = word[1]
       @word_three[0] = word[2]
@@ -34,9 +33,8 @@ def find_words
     end
   end
 
-#second four
+#round two
   shuffled_words.each do |word|
-    word = word.split("")
     if word[0] == @word_two[0]
       @word_two[1] = word[1]
       @word_two[2] = word[2]
@@ -46,23 +44,7 @@ def find_words
     end
   end
 
-#check
-  unless shuffled_words.any? {|word| word.start_with?("#{@word_one[1]}#{@word_two[1]}")}
-    return ""
-  end
-  unless shuffled_words.any? {|word| word.start_with?("#{@word_one[2]}#{@word_two[2]}")}
-    return ""
-  end
-  unless shuffled_words.any? {|word| word.start_with?("#{@word_one[3]}#{@word_two[3]}")}
-    return ""
-  end
-  unless shuffled_words.any? {|word| word.start_with?("#{@word_one[4]}#{@word_two[4]}")}
-    return ""
-  end
-
-#first three
   shuffled_words.each do |word|
-    word = word.split("")
     if word[0] == @word_one[1] && word[1] == @word_two[1]
       @word_three[1] = word[2]
       @word_four[1] = word[3]
@@ -71,7 +53,18 @@ def find_words
     end
   end
 
-#check
+  #check down
+    unless shuffled_words.any? {|word| word.start_with?("#{@word_one[2]}#{@word_two[2]}")}
+      return ""
+    end
+    unless shuffled_words.any? {|word| word.start_with?("#{@word_one[3]}#{@word_two[3]}")}
+      return ""
+    end
+    unless shuffled_words.any? {|word| word.start_with?("#{@word_one[4]}#{@word_two[4]}")}
+      return ""
+    end
+
+#check across
   unless shuffled_words.any? {|word| word.start_with?("#{@word_three[0]}#{@word_three[1]}")}
     return ""
   end
@@ -82,9 +75,8 @@ def find_words
     return ""
   end
 
-#second three
+#round three
   shuffled_words.each do |word|
-    word = word.split("")
     if word[0] == @word_three[0] && word[1] == @word_three[1]
       @word_three[2] = word[2]
       @word_three[3] = word[3]
@@ -93,20 +85,8 @@ def find_words
     end
   end
 
-#check
-  unless shuffled_words.any? {|word| word.start_with?("#{@word_one[2]}#{@word_two[2]}#{@word_three[2]}")}
-    return ""
-  end
-  unless shuffled_words.any? {|word| word.start_with?("#{@word_one[3]}#{@word_two[3]}#{@word_three[3]}")}
-    return ""
-  end
-  unless shuffled_words.any? {|word| word.start_with?("#{@word_one[4]}#{@word_two[4]}#{@word_three[4]}")}
-    return ""
-  end
 
-#first two
   shuffled_words.each do |word|
-    word = word.split("")
     if word[0] == @word_one[2] && word[1] == @word_two[2] && word[2] == @word_three[2]
       @word_four[2] = word[3]
       @word_five[2] = word[4]
@@ -114,7 +94,15 @@ def find_words
     end
   end
 
-#check
+  #check down
+    unless shuffled_words.any? {|word| word.start_with?("#{@word_one[3]}#{@word_two[3]}#{@word_three[3]}")}
+      return ""
+    end
+    unless shuffled_words.any? {|word| word.start_with?("#{@word_one[4]}#{@word_two[4]}#{@word_three[4]}")}
+      return ""
+    end
+
+#check across
   unless shuffled_words.any? {|word| word.start_with?("#{@word_four[0]}#{@word_four[1]}#{@word_four[2]}")}
     return ""
   end
@@ -122,7 +110,8 @@ def find_words
     return ""
   end
 
-#second two
+#found four
+
 shuffled_words.each do |word|
   word = word.split("")
   if word[0] == @word_four[0] && word[1] == @word_four[1] && word[2] == @word_four[2]
@@ -132,8 +121,16 @@ shuffled_words.each do |word|
   end
 end
 
+shuffled_words.each do |word|
+  word = word.split("")
+  if word[0] == @word_one[3] && word[1] == @word_two[3] && word[2] == @word_three[3] && word[2] == @word_four[3]
+    @word_five[3] = word[4]
+    break
+  end
+end
+
 #check
-  unless shuffled_words.any? {|word| word.start_with?("#{@word_one[3]}#{@word_two[3]}#{@word_three[3]}#{@word_four[3]}")}
+  unless shuffled_words.any? {|word| word.start_with?("#{@word_five[0]}#{@word_five[1]}#{@word_five[2]}#{@word_five[3]}")}
     return ""
   end
   unless shuffled_words.any? {|word| word.start_with?("#{@word_one[4]}#{@word_two[4]}#{@word_three[4]}#{@word_four[4]}")}
@@ -142,27 +139,14 @@ end
 
 #first one
   shuffled_words.each do |word|
-    word = word.split("")
-    if word[0] == @word_one[3] && word[1] == @word_two[3] && word[2] == @word_three[3] && word[3] == @word_four[3]
-        @word_five[3] = word[4]
+    if word[0] == @word_five[0] && word[1] == @word_five[1] && word[2] == @word_five[2] && word[3] == @word_five[3] &&
+      shuffled_words.include?("#{@word_one[4]}#{@word_two[4]}#{@word_three[4]}#{@word_four[4]}#{word[4]}")
+        @word_five[4] = word[4]
         break
+    else
+      return ""
     end
   end
-
-  #last one
-    shuffled_words.each do |word|
-      word = word.split("")
-      if word[0] == @word_one[4] && word[1] == @word_two[4] && word[2] == @word_three[4] && word[3] == @word_four[4] &&
-        shuffled_words.include?("#{@word_five[0]}#{@word_five[1]}#{@word_five[2]}#{@word_five[3]}#{word[4]}")
-          @word_five[4] = word[4]
-          break
-      else
-        return ""
-      end
-    end
-
-    y = Time.new
-    puts @x - y
 
   @board = [@word_one, @word_two, @word_three, @word_four, @word_five]
   @board_reverse = @board.transpose
@@ -180,9 +164,9 @@ end
   puts @board_reverse[4].join("")
   puts ""
 end
-
-
-  @x = Time.new
-  until find_words != ""
-    find_words
-  end
+@x = 0
+until find_words != ""
+  puts "#{@x}"
+  @x += 1
+  find_words
+end
